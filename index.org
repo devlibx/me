@@ -13,7 +13,7 @@ This is a expremental pages for a demo
 [[./images/harish.png]]
 
 
-* Topic
-** Kakfa - [[./topic/emacs/emacs.html][Link]] 
+* Topics
+** Emacs - [[./topic/emacs/emacs.html][Link]]
 
  
