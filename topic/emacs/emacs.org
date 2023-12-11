@@ -37,7 +37,7 @@ Fast navigation in code -> your can jump in code faster with these keys
 * Org Mode
 This section describe commands for Org Mode
 
-** Org doc to Htmp
+** Org doc to Html
 You can generate a html file out of a Org doc
 #+begin_src shell
 
