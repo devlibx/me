@@ -11,3 +11,9 @@ This is a expremental pages for a demo
  #+CAPTION: Harish Bohara: profile image
  #+ATTR_HTML: :width 300px
 [[./images/harish.png]]
+
+
+* Topic
+** Kakfa - [[./topic/emacs/emacs.html][Link]] 
+
+ 
