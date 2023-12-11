@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-12 Tue 02:08 -->
+<!-- 2023-12-12 Tue 02:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs help page for my settings</title>
@@ -23,27 +23,74 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9f32f60">Setup</a></li>
+<li><a href="#org63ec8f5">Setup</a></li>
+<li><a href="#org67210a2">Basic Commands</a>
+<ul>
+<li><a href="#orgcee5c41">Navigation</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org9f32f60" class="outline-2">
-<h2 id="org9f32f60">Setup</h2>
-<div class="outline-text-2" id="text-org9f32f60">
+<div id="outline-container-org63ec8f5" class="outline-2">
+<h2 id="org63ec8f5">Setup</h2>
+<div class="outline-text-2" id="text-org63ec8f5">
 <p>
 This is a custom Emacs setup for my own use. I has the followign setup:
 </p>
-<pre class="example">
-mkdir .emacs.d
+
+<ul class="org-ul">
+<li><p>
+Download emacs settings
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">mkdir .emacs.d
 git clone https://github.com/devlibx/emacs.git .
 </pre>
+</div></li>
+
+<li><p>
+This setup uses doom-emacs theam - you will have to install it
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"># Install doom-emacs:
+M-x package-list-packages =&gt; Search for "doom-theams" =&gt; Install
+
+# Note it is possible  you may not see "doom-theams" directly from M-x package-install. So use these steps.
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org67210a2" class="outline-2">
+<h2 id="org67210a2">Basic Commands</h2>
+<div class="outline-text-2" id="text-org67210a2">
+</div>
+<div id="outline-container-orgcee5c41" class="outline-3">
+<h3 id="orgcee5c41">Navigation</h3>
+<div class="outline-text-3" id="text-orgcee5c41">
+<p>
+Fast navigation in code -&gt; your can jump in code faster with these keys
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">M-e =&gt; end of next block
+M-a =&gt; begining of next block
+M-+ =&gt; Window size increase (Note my keyboard needs shift key to get +) 
+M-_ =&gt; Winow size increase  (Note my keyboard needs shift key to gethash _ =&gt; it does note need shift to do - and to keep in same I used _)
+M-[ =&gt; Horizontally window increase (Note - no shift)
+M-] =&gt; Horizontally window reduce (Note - no shift)
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Harish Bohara</p>
-<p class="date">Created: 2023-12-12 Tue 02:08</p>
+<p class="date">Created: 2023-12-12 Tue 02:30</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

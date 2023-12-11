@@ -5,7 +5,32 @@
 
 * Setup
 This is a custom Emacs setup for my own use. I has the followign setup:
-#+begin_src
-  mkdir .emacs.d
-  git clone https://github.com/devlibx/emacs.git .
+
+- Download emacs settings
+  #+begin_src shell
+    mkdir .emacs.d
+    git clone https://github.com/devlibx/emacs.git .
 #+end_src
+
+- This setup uses doom-emacs theam - you will have to install it
+  #+begin_src shell
+    # Install doom-emacs:
+    M-x package-list-packages => Search for "doom-theams" => Install
+
+    # Note it is possible  you may not see "doom-theams" directly from M-x package-install. So use these steps.
+  #+end_src
+
+
+* Basic Commands
+** Navigation
+Fast navigation in code -> your can jump in code faster with these keys
+#+begin_src shell
+  M-e => end of next block
+  M-a => begining of next block
+  M-+ => Window size increase (Note my keyboard needs shift key to get +) 
+  M-_ => Winow size increase  (Note my keyboard needs shift key to gethash _ => it does note need shift to do - and to keep in same I used _)
+  M-[ => Horizontally window increase (Note - no shift)
+  M-] => Horizontally window reduce (Note - no shift)
+#+end_src
+
+
