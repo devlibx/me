@@ -1,0 +1,11 @@
+#+TITLE: Emacs help page for my settings
+#+EXPORT_FILE_NAME: ./emacs.html
+#+SETUPFILE: https://devlibx.github.io/emacs/org/theams/theme-readtheorg/theme-readtheorg.setup
+#+OPTIONS: num:nil
+
+* Setup
+This is a custom Emacs setup for my own use. I has the followign setup:
+#+begin_src
+  mkdir .emacs.d
+  git clone https://github.com/devlibx/emacs.git .
+#+end_src
