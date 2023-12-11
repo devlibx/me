@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-12 Tue 02:30 -->
+<!-- 2023-12-12 Tue 02:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs help page for my settings</title>
@@ -23,19 +23,24 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org63ec8f5">Setup</a></li>
-<li><a href="#org67210a2">Basic Commands</a>
+<li><a href="#orgada1575">Setup</a></li>
+<li><a href="#orge83ba36">Basic Commands</a>
 <ul>
-<li><a href="#orgcee5c41">Navigation</a></li>
+<li><a href="#org324d3ea">Navigation</a></li>
+</ul>
+</li>
+<li><a href="#org65aa0bc">Org Mode</a>
+<ul>
+<li><a href="#org03ebc91">Org doc to Htmp</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org63ec8f5" class="outline-2">
-<h2 id="org63ec8f5">Setup</h2>
-<div class="outline-text-2" id="text-org63ec8f5">
+<div id="outline-container-orgada1575" class="outline-2">
+<h2 id="orgada1575">Setup</h2>
+<div class="outline-text-2" id="text-orgada1575">
 <p>
 This is a custom Emacs setup for my own use. I has the followign setup:
 </p>
@@ -65,13 +70,13 @@ M-x package-list-packages =&gt; Search for "doom-theams" =&gt; Install
 </div>
 
 
-<div id="outline-container-org67210a2" class="outline-2">
-<h2 id="org67210a2">Basic Commands</h2>
-<div class="outline-text-2" id="text-org67210a2">
+<div id="outline-container-orge83ba36" class="outline-2">
+<h2 id="orge83ba36">Basic Commands</h2>
+<div class="outline-text-2" id="text-orge83ba36">
 </div>
-<div id="outline-container-orgcee5c41" class="outline-3">
-<h3 id="orgcee5c41">Navigation</h3>
-<div class="outline-text-3" id="text-orgcee5c41">
+<div id="outline-container-org324d3ea" class="outline-3">
+<h3 id="org324d3ea">Navigation</h3>
+<div class="outline-text-3" id="text-org324d3ea">
 <p>
 Fast navigation in code -&gt; your can jump in code faster with these keys
 </p>
@@ -87,10 +92,55 @@ M-] =&gt; Horizontally window reduce (Note - no shift)
 </div>
 </div>
 </div>
+
+
+<div id="outline-container-org65aa0bc" class="outline-2">
+<h2 id="org65aa0bc">Org Mode</h2>
+<div class="outline-text-2" id="text-org65aa0bc">
+<p>
+This section describe commands for Org Mode
+</p>
+</div>
+
+<div id="outline-container-org03ebc91" class="outline-3">
+<h3 id="org03ebc91">Org doc to Htmp</h3>
+<div class="outline-text-3" id="text-org03ebc91">
+<p>
+You can generate a html file out of a Org doc
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">
+# (1) Generate HTML and also open on browser, (2) Generate HTML
+C-c C-e h o
+C-c C-e h h
+
+</pre>
+</div>
+
+<p>
+The Org file needs some formation - so you can used the following to add the css. Add the following content on top of your file
+</p>
+<ul class="org-ul">
+<li>Edit title</li>
+<li>Give file location to save the html file</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-shell">
+#+TITLE: Emacs help page for my settings
+#+EXPORT_FILE_NAME: ./emacs.html
+#+SETUPFILE: https://devlibx.github.io/emacs/org/theams/theme-readtheorg/theme-readtheorg.setup
+#+OPTIONS: num:nil
+
+</pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Harish Bohara</p>
-<p class="date">Created: 2023-12-12 Tue 02:30</p>
+<p class="date">Created: 2023-12-12 Tue 02:39</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

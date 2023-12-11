@@ -34,3 +34,28 @@ Fast navigation in code -> your can jump in code faster with these keys
 #+end_src
 
 
+* Org Mode
+This section describe commands for Org Mode
+
+** Org doc to Htmp
+You can generate a html file out of a Org doc
+#+begin_src shell
+
+  # (1) Generate HTML and also open on browser, (2) Generate HTML
+  C-c C-e h o
+  C-c C-e h h
+
+#+end_src
+
+The Org file needs some formation - so you can used the following to add the css. Add the following content on top of your file
+- Edit title
+- Give file location to save the html file
+
+#+begin_src shell
+
+  #+TITLE: Emacs help page for my settings
+  #+EXPORT_FILE_NAME: ./emacs.html
+  #+SETUPFILE: https://devlibx.github.io/emacs/org/theams/theme-readtheorg/theme-readtheorg.setup
+  #+OPTIONS: num:nil
+  
+#+end_src
