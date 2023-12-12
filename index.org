@@ -1,18 +1,10 @@
- #+TITLE: Example pages to host GitHub Pages
+ #+TITLE: Knowledge Base
  #+EXPORT_FILE_NAME: ./index.html
  #+SETUPFILE: https://devlibx.github.io/emacs/org/theams/theme-readtheorg/theme-readtheorg.setup
  #+OPTIONS: num:nil
  
-This pages is to start my GitHub pages to show articles - replacement for paid tools
-
-* Org mode and Git Pages Demo
-This is a expremental pages for a demo
-
- #+CAPTION: Harish Bohara: profile image
- #+ATTR_HTML: :width 300px
-[[./images/harish.png]]
-
-
+Given below are the are the list of diffrent topic:
+ 
 * Topics
 ** Emacs - [[./topic/emacs/emacs.html][Link]]
 
