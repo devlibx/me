@@ -32,7 +32,21 @@ Fast navigation in code -> your can jump in code faster with these keys
   M-[ => Horizontally window increase (Note - no shift)
   M-] => Horizontally window reduce (Note - no shift)
 #+end_src
+** Buffer
+#+begin_src shell
+  C-x k => Kill buffer
+  C-x b => Switch buffer
+  C-x o => Jump to next buffer
 
+  M-x kb  => (custom) Kill buffer
+  M-x kab => (custom) Kill all buffers
+
+  C-x 0 => Kill this buffer
+  C-x 1 => Make current buffer full screen
+  C-x 2 => Split Horizontally
+  C-x 3 => Split Vertically
+
+#+end_src
 
 * Org Mode
 This section describe commands for Org Mode
