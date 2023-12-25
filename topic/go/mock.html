@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-12-25 Mon 16:52 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Migration from google gomock to uber gomock</title>
+<meta name="author" content="Harish Bohara" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/readtheorg.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Migration from google gomock to uber gomock</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org9b5c213">Installation</a></li>
+<li><a href="#org35b6b75">Changes</a>
+<ul>
+<li><a href="#orgf9766ce">Replace Import</a></li>
+</ul>
+</li>
+<li><a href="#org0d425a3">How to used a mock</a>
+<ul>
+<li><a href="#org996f00f">A order processor with generics</a></li>
+<li><a href="#org2f8bc21">Test case</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org9b5c213" class="outline-2">
+<h2 id="org9b5c213">Installation</h2>
+<div class="outline-text-2" id="text-org9b5c213">
+<p>
+Install mockgen from uber
+</p>
+<div class="org-src-container">
+<pre class="src src-golang">go install go.uber.org/mock/mockgen@latest
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org35b6b75" class="outline-2">
+<h2 id="org35b6b75">Changes</h2>
+<div class="outline-text-2" id="text-org35b6b75">
+</div>
+<div id="outline-container-orgf9766ce" class="outline-3">
+<h3 id="orgf9766ce">Replace Import</h3>
+<div class="outline-text-3" id="text-orgf9766ce">
+<p>
+I will recommend to find replace the follwing
+</p>
+<div class="org-src-container">
+<pre class="src src-golang">"github.com/golang/mock/gomock"
+
+to
+
+"go.uber.org/mock/gomock"
+</pre>
+</div>
+
+<p>
+Run go mode tidy to remove refrences of google gomock from .mode file
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">go mode tidy
+go generate ./...
+</pre>
+</div>
+
+<p>
+You should regenerate the mocks if needed (now your will have uber gomock in the generated mocks)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0d425a3" class="outline-2">
+<h2 id="org0d425a3">How to used a mock</h2>
+<div class="outline-text-2" id="text-org0d425a3">
+</div>
+<div id="outline-container-org996f00f" class="outline-3">
+<h3 id="org996f00f">A order processor with generics</h3>
+<div class="outline-text-3" id="text-org996f00f">
+<div class="org-src-container">
+<pre class="src src-golang">package demo
+
+import "fmt"
+
+type FoodOrderRequest struct {
+        NameOfDish string
+}
+
+type MobileOrderRequest struct {
+        BrandName string
+}
+
+type FoodOrderResponse struct {
+        OrderId string
+}
+
+type MobileOrderResponse struct {
+        DeliveryDate string
+}
+
+type Request interface {
+        FoodOrderRequest | MobileOrderRequest
+}
+
+type Response interface {
+        FoodOrderResponse | MobileOrderResponse
+}
+
+//go:generate mockgen -destination=order_processor_mock.go -typed -package=demo -source demo.go
+type OrderProcessor[T Request, R Response] interface {
+        Process(request T) (response R, err error)
+}
+
+type orderProcessorImpl[T Request, R Response] struct {
+        processor OrderProcessor[T, R]
+}
+
+func (o orderProcessorImpl[T, R]) Process(request T) (response R, err error) {
+        fmt.Println("I will also do some more stuff - I am a decorator")
+        return o.processor.Process(request)
+}
+
+type FoodOrderProcessor struct {
+}
+
+func (f FoodOrderProcessor) Process(request FoodOrderRequest) (response FoodOrderResponse, err error) {
+        return FoodOrderResponse{OrderId: "food_order_response_id_!"}, nil
+}
+
+type MobileOrderProcessor struct {
+}
+
+func (m MobileOrderProcessor) Process(request MobileOrderRequest) (response MobileOrderResponse, err error) {
+        return MobileOrderResponse{DeliveryDate: "2024-01-01"}, nil
+}
+
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2f8bc21" class="outline-3">
+<h3 id="org2f8bc21">Test case</h3>
+<div class="outline-text-3" id="text-org2f8bc21">
+<pre class="example">
+package demo
+
+import (
+        "github.com/stretchr/testify/assert"
+        "go.uber.org/mock/gomock"
+        "testing"
+)
+
+func TestName(t *testing.T) {
+        ctrl := gomock.NewController(t)
+        mockOrderCreator := NewMockOrderProcessor[MobileOrderRequest, MobileOrderResponse](ctrl)
+        mockOrderCreator.EXPECT().Process(gomock.Any()).Return(MobileOrderResponse{DeliveryDate: "2023-01-01"}, nil).AnyTimes()
+
+        orderProcessorDecorator := orderProcessorImpl[MobileOrderRequest, MobileOrderResponse]{processor: mockOrderCreator}
+
+        resp, err := orderProcessorDecorator.Process(MobileOrderRequest{BrandName: "some_brand_name"})
+        assert.NoError(t, err)
+        assert.Equal(t, "2023-01-01", resp.DeliveryDate)
+}
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Harish Bohara</p>
+<p class="date">Created: 2023-12-25 Mon 16:52</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

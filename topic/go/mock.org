@@ -1,0 +1,115 @@
+#+TITLE: Migration from google gomock to uber gomock
+#+EXPORT_FILE_NAME: ./mock.html
+#+SETUPFILE: https://devlibx.github.io/emacs/org/theams/theme-readtheorg/theme-readtheorg.setup
+#+OPTIONS: num:nil
+
+
+* Installation
+Install mockgen from uber
+#+begin_src golang
+  go install go.uber.org/mock/mockgen@latest
+#+end_src
+
+* Changes
+** Replace Import
+I will recommend to find replace the follwing
+#+begin_src golang
+  "github.com/golang/mock/gomock"
+
+  to
+
+  "go.uber.org/mock/gomock"
+#+end_src
+
+Run go mode tidy to remove refrences of google gomock from .mode file
+#+begin_src shell
+  go mode tidy
+  go generate ./...
+#+end_src
+
+You should regenerate the mocks if needed (now your will have uber gomock in the generated mocks)
+
+* How to used a mock
+** A order processor with generics
+#+begin_src golang
+package demo
+
+import "fmt"
+
+type FoodOrderRequest struct {
+	NameOfDish string
+}
+
+type MobileOrderRequest struct {
+	BrandName string
+}
+
+type FoodOrderResponse struct {
+	OrderId string
+}
+
+type MobileOrderResponse struct {
+	DeliveryDate string
+}
+
+type Request interface {
+	FoodOrderRequest | MobileOrderRequest
+}
+
+type Response interface {
+	FoodOrderResponse | MobileOrderResponse
+}
+
+//go:generate mockgen -destination=order_processor_mock.go -typed -package=demo -source demo.go
+type OrderProcessor[T Request, R Response] interface {
+	Process(request T) (response R, err error)
+}
+
+type orderProcessorImpl[T Request, R Response] struct {
+	processor OrderProcessor[T, R]
+}
+
+func (o orderProcessorImpl[T, R]) Process(request T) (response R, err error) {
+	fmt.Println("I will also do some more stuff - I am a decorator")
+	return o.processor.Process(request)
+}
+
+type FoodOrderProcessor struct {
+}
+
+func (f FoodOrderProcessor) Process(request FoodOrderRequest) (response FoodOrderResponse, err error) {
+	return FoodOrderResponse{OrderId: "food_order_response_id_!"}, nil
+}
+
+type MobileOrderProcessor struct {
+}
+
+func (m MobileOrderProcessor) Process(request MobileOrderRequest) (response MobileOrderResponse, err error) {
+	return MobileOrderResponse{DeliveryDate: "2024-01-01"}, nil
+}
+
+#+end_src
+
+** Test case
+#+begin_src
+package demo
+
+import (
+	"github.com/stretchr/testify/assert"
+	"go.uber.org/mock/gomock"
+	"testing"
+)
+
+func TestName(t *testing.T) {
+	ctrl := gomock.NewController(t)
+	mockOrderCreator := NewMockOrderProcessor[MobileOrderRequest, MobileOrderResponse](ctrl)
+	mockOrderCreator.EXPECT().Process(gomock.Any()).Return(MobileOrderResponse{DeliveryDate: "2023-01-01"}, nil).AnyTimes()
+
+	orderProcessorDecorator := orderProcessorImpl[MobileOrderRequest, MobileOrderResponse]{processor: mockOrderCreator}
+
+	resp, err := orderProcessorDecorator.Process(MobileOrderRequest{BrandName: "some_brand_name"})
+	assert.NoError(t, err)
+	assert.Equal(t, "2023-01-01", resp.DeliveryDate)
+}
+
+#+end_src
