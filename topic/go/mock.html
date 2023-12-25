@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-25 Mon 16:52 -->
+<!-- 2023-12-25 Mon 16:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Migration from google gomock to uber gomock</title>
@@ -23,16 +23,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9b5c213">Installation</a></li>
-<li><a href="#org35b6b75">Changes</a>
+<li><a href="#orgbd4a5b3">Installation</a></li>
+<li><a href="#org8469074">Changes</a>
 <ul>
-<li><a href="#orgf9766ce">Replace Import</a></li>
+<li><a href="#orgb830c3a">Replace Import</a></li>
 </ul>
 </li>
-<li><a href="#org0d425a3">How to used a mock</a>
+<li><a href="#org3a82ccb">How to used a mock</a>
 <ul>
-<li><a href="#org996f00f">A order processor with generics</a></li>
-<li><a href="#org2f8bc21">Test case</a></li>
+<li><a href="#org73ab471">A order processor with generics</a></li>
+<li><a href="#org51e622a">Test case</a></li>
 </ul>
 </li>
 </ul>
@@ -40,9 +40,9 @@
 </div>
 
 
-<div id="outline-container-org9b5c213" class="outline-2">
-<h2 id="org9b5c213">Installation</h2>
-<div class="outline-text-2" id="text-org9b5c213">
+<div id="outline-container-orgbd4a5b3" class="outline-2">
+<h2 id="orgbd4a5b3">Installation</h2>
+<div class="outline-text-2" id="text-orgbd4a5b3">
 <p>
 Install mockgen from uber
 </p>
@@ -53,13 +53,13 @@ Install mockgen from uber
 </div>
 </div>
 
-<div id="outline-container-org35b6b75" class="outline-2">
-<h2 id="org35b6b75">Changes</h2>
-<div class="outline-text-2" id="text-org35b6b75">
+<div id="outline-container-org8469074" class="outline-2">
+<h2 id="org8469074">Changes</h2>
+<div class="outline-text-2" id="text-org8469074">
 </div>
-<div id="outline-container-orgf9766ce" class="outline-3">
-<h3 id="orgf9766ce">Replace Import</h3>
-<div class="outline-text-3" id="text-orgf9766ce">
+<div id="outline-container-orgb830c3a" class="outline-3">
+<h3 id="orgb830c3a">Replace Import</h3>
+<div class="outline-text-3" id="text-orgb830c3a">
 <p>
 I will recommend to find replace the follwing
 </p>
@@ -88,15 +88,15 @@ You should regenerate the mocks if needed (now your will have uber gomock in the
 </div>
 </div>
 
-<div id="outline-container-org0d425a3" class="outline-2">
-<h2 id="org0d425a3">How to used a mock</h2>
-<div class="outline-text-2" id="text-org0d425a3">
+<div id="outline-container-org3a82ccb" class="outline-2">
+<h2 id="org3a82ccb">How to used a mock</h2>
+<div class="outline-text-2" id="text-org3a82ccb">
 </div>
-<div id="outline-container-org996f00f" class="outline-3">
-<h3 id="org996f00f">A order processor with generics</h3>
-<div class="outline-text-3" id="text-org996f00f">
+<div id="outline-container-org73ab471" class="outline-3">
+<h3 id="org73ab471">A order processor with generics</h3>
+<div class="outline-text-3" id="text-org73ab471">
 <div class="org-src-container">
-<pre class="src src-golang">package demo
+<pre class="src src-go">package demo
 
 import "fmt"
 
@@ -157,11 +157,11 @@ func (m MobileOrderProcessor) Process(request MobileOrderRequest) (response Mobi
 </div>
 </div>
 
-<div id="outline-container-org2f8bc21" class="outline-3">
-<h3 id="org2f8bc21">Test case</h3>
-<div class="outline-text-3" id="text-org2f8bc21">
-<pre class="example">
-package demo
+<div id="outline-container-org51e622a" class="outline-3">
+<h3 id="org51e622a">Test case</h3>
+<div class="outline-text-3" id="text-org51e622a">
+<div class="org-src-container">
+<pre class="src src-go">package demo
 
 import (
         "github.com/stretchr/testify/assert"
@@ -186,9 +186,10 @@ func TestName(t *testing.T) {
 </div>
 </div>
 </div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: Harish Bohara</p>
-<p class="date">Created: 2023-12-25 Mon 16:52</p>
+<p class="date">Created: 2023-12-25 Mon 16:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

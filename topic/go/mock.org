@@ -31,7 +31,7 @@ You should regenerate the mocks if needed (now your will have uber gomock in the
 
 * How to used a mock
 ** A order processor with generics
-#+begin_src golang
+#+begin_src go
 package demo
 
 import "fmt"
@@ -91,7 +91,7 @@ func (m MobileOrderProcessor) Process(request MobileOrderRequest) (response Mobi
 #+end_src
 
 ** Test case
-#+begin_src
+#+begin_src go
 package demo
 
 import (
