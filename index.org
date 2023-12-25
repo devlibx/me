@@ -7,5 +7,5 @@ Given below are the are the list of diffrent topic:
  
 * Topics
 ** Emacs - [[./topic/emacs/emacs.html][Link]]
-
+** Go Generics - [[./topic/go/mock.html][Link]] 
  
