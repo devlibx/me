@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-12-27 Wed 23:39 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flink K8S Operator Setup</title>
+<meta name="author" content="Harish Bohara" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://devlibx.github.io/emacs/org/theams/theme-readtheorg/readtheorg.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Flink K8S Operator Setup</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org257ae3b">K8S Operator Installation</a></li>
+<li><a href="#orgfc46e4c">Build your Flink Image</a>
+<ul>
+<li><a href="#org614f49e">Dockerfile</a></li>
+<li><a href="#orgee66f3c">Build image</a></li>
+</ul>
+</li>
+<li><a href="#org03c6a80">Flink Job</a>
+<ul>
+<li><a href="#orgbfd32cc">Flink job configration</a></li>
+</ul>
+</li>
+<li><a href="#org516e4bb">Deploy</a>
+<ul>
+<li><a href="#org866056d">Deploy your job to K8S cluster</a></li>
+<li><a href="#orgbcbf009">Verify the job is running</a></li>
+<li><a href="#orgd2421a7">Launch flink UI</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org257ae3b" class="outline-2">
+<h2 id="org257ae3b">K8S Operator Installation</h2>
+<div class="outline-text-2" id="text-org257ae3b">
+<p>
+Setup cert manager
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">kubectl create -f https://github.com/jetstack/cert-manager/releases/download/v1.8.2/cert-manager.yaml
+</pre>
+</div>
+
+
+<p>
+Install K8S operator to manage Flink 
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">helm repo add flink-operator-repo https://downloads.apache.org/flink/flink-kubernetes-operator-1.7.0/
+helm install --set image.repository=apache/flink-kubernetes-operator flink-kubernetes-operator flink-operator-repo/flink-kubernetes-operator
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfc46e4c" class="outline-2">
+<h2 id="orgfc46e4c">Build your Flink Image</h2>
+<div class="outline-text-2" id="text-orgfc46e4c">
+<p>
+This is not mandatory. I am doing this steps to pack the jar in the docker image to run it. You can get it from S3 (for that you will need to do more configration
+to allow flink to have access to S3. Also some flink s3 jars are also needed in the setup)
+</p>
+</div>
+
+<div id="outline-container-org614f49e" class="outline-3">
+<h3 id="org614f49e">Dockerfile</h3>
+<div class="outline-text-3" id="text-org614f49e">
+<div class="org-src-container">
+<pre class="src src-shell">FROM flink:1.18
+COPY libexec/examples/streaming/StateMachineExample.jar /opt/flink/plugins/
+</pre>
+</div>
+<p>
+Note in my case, I had flink installed in my machine. And this StateMachineExample.jar file in in my flink installation. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgee66f3c" class="outline-3">
+<h3 id="orgee66f3c">Build image</h3>
+<div class="outline-text-3" id="text-orgee66f3c">
+<p>
+Build image and push to your docker hub or common docker hub. K8S should be able to pull image form this repo
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">docker build -t docker.io/&lt;&gt;/flink:1.18.001
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03c6a80" class="outline-2">
+<h2 id="org03c6a80">Flink Job</h2>
+<div class="outline-text-2" id="text-org03c6a80">
+</div>
+<div id="outline-container-orgbfd32cc" class="outline-3">
+<h3 id="orgbfd32cc">Flink job configration</h3>
+<div class="outline-text-3" id="text-orgbfd32cc">
+<p>
+NOTE - put proper image link. Note in this image I copied my jar to /opt/flink/plugins. You also need to change as per your path.
+</p>
+
+<p>
+File Name = deploy.yaml
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml">
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: basic-example-6
+spec:
+  image:  docker.io/&lt;&gt;/flink:1.18.001
+  flinkVersion: v1_18
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: "1"
+  serviceAccount: flink
+  jobManager:
+    resource:
+      memory: "1024m"
+      cpu: 1
+  taskManager:
+    resource:
+      memory: "1024m"
+      cpu: 1
+  job:
+    jarURI: local:///opt/flink/plugins/StateMachineExample.jar
+    parallelism: 4
+    upgradeMode: stateless
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org516e4bb" class="outline-2">
+<h2 id="org516e4bb">Deploy</h2>
+<div class="outline-text-2" id="text-org516e4bb">
+</div>
+<div id="outline-container-org866056d" class="outline-3">
+<h3 id="org866056d">Deploy your job to K8S cluster</h3>
+<div class="outline-text-3" id="text-org866056d">
+<div class="org-src-container">
+<pre class="src src-shell">kubectl create -f deploy.yaml
+
+# Also to stop the job or delete it
+kubectl delete -f deploy.yaml
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgbcbf009" class="outline-3">
+<h3 id="orgbcbf009">Verify the job is running</h3>
+<div class="outline-text-3" id="text-orgbcbf009">
+<p>
+Your can go to your cluster and can check the pods with this job name
+</p>
+</div>
+</div>
+<div id="outline-container-orgd2421a7" class="outline-3">
+<h3 id="orgd2421a7">Launch flink UI</h3>
+<div class="outline-text-3" id="text-orgd2421a7">
+<p>
+This setup will also launch flink UI for your job. Form example in minikube your can do following
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">kubectl port-forward svc/basic-example-6-rest 8081
+</pre>
+</div>
+
+<p>
+Launch <a href="http://localhost:8081">http://localhost:8081</a> to see your Flink UI
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Harish Bohara</p>
+<p class="date">Created: 2023-12-27 Wed 23:39</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
