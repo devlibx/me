@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-31 Sun 13:57 -->
+<!-- 2023-12-31 Sun 14:02 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gradle Help</title>
@@ -23,35 +23,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org50b64dd">Setup common dependency using Gradle</a>
+<li><a href="#org2aea481">Setup common dependency using Gradle</a>
 <ul>
-<li><a href="#org1797817">buildSrc</a>
+<li><a href="#org2c7bdca">buildSrc</a>
 <ul>
-<li><a href="#orge9ee391">build.gradle</a></li>
-<li><a href="#orgd39d036">devlibx.common.gradle</a></li>
+<li><a href="#org6c6c87f">build.gradle</a></li>
+<li><a href="#orgb3d71c4">devlibx.common.gradle</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org664b640">Use in in your sub-rpojects</a></li>
+<li><a href="#org1ab0654">Use in in your sub-projects</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org50b64dd" class="outline-2">
-<h2 id="org50b64dd">Setup common dependency using Gradle</h2>
-<div class="outline-text-2" id="text-org50b64dd">
+<div id="outline-container-org2aea481" class="outline-2">
+<h2 id="org2aea481">Setup common dependency using Gradle</h2>
+<div class="outline-text-2" id="text-org2aea481">
 </div>
-<div id="outline-container-org1797817" class="outline-3">
-<h3 id="org1797817">buildSrc</h3>
-<div class="outline-text-3" id="text-org1797817">
+<div id="outline-container-org2c7bdca" class="outline-3">
+<h3 id="org2c7bdca">buildSrc</h3>
+<div class="outline-text-3" id="text-org2c7bdca">
 <p>
-This is to create common conventions
+This is to create common conventions. Create buildSrc folder in your root. Inside create following files with contents.
 </p>
 </div>
-<div id="outline-container-orge9ee391" class="outline-4">
-<h4 id="orge9ee391">build.gradle</h4>
-<div class="outline-text-4" id="text-orge9ee391">
+<div id="outline-container-org6c6c87f" class="outline-4">
+<h4 id="org6c6c87f">build.gradle</h4>
+<div class="outline-text-4" id="text-org6c6c87f">
 <pre class="example">
 plugins {
     id 'groovy-gradle-plugin'
@@ -64,9 +64,9 @@ repositories {
 </div>
 </div>
 
-<div id="outline-container-orgd39d036" class="outline-4">
-<h4 id="orgd39d036">devlibx.common.gradle</h4>
-<div class="outline-text-4" id="text-orgd39d036">
+<div id="outline-container-orgb3d71c4" class="outline-4">
+<h4 id="orgb3d71c4">devlibx.common.gradle</h4>
+<div class="outline-text-4" id="text-orgb3d71c4">
 <p>
 Create a file src/main/groovy/devlibx.common.gradle
 </p>
@@ -91,11 +91,11 @@ dependencies {
 </div>
 </div>
 
-<div id="outline-container-org664b640" class="outline-2">
-<h2 id="org664b640">Use in in your sub-rpojects</h2>
-<div class="outline-text-2" id="text-org664b640">
+<div id="outline-container-org1ab0654" class="outline-2">
+<h2 id="org1ab0654">Use in in your sub-projects</h2>
+<div class="outline-text-2" id="text-org1ab0654">
 <p>
-Once your have common script, you can use it in your build.gradle files
+Once your have common script (any sub-projects build.gradle file), you can use it in your build.gradle files
 </p>
 <pre class="example">
   plugins {
@@ -113,7 +113,7 @@ Not all the settings in buildSrc will be avaliable here
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Harish Bohara</p>
-<p class="date">Created: 2023-12-31 Sun 13:57</p>
+<p class="date">Created: 2023-12-31 Sun 14:02</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

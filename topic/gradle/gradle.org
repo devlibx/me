@@ -5,7 +5,7 @@
 
 * Setup common dependency using Gradle
 ** buildSrc
-This is to create common conventions
+This is to create common conventions. Create buildSrc folder in your root. Inside create following files with contents.
 *** build.gradle
 #+begin_src 
 plugins {
@@ -36,8 +36,8 @@ dependencies {
 }
 #+end_src
 
-* Use in in your sub-rpojects
-Once your have common script, you can use it in your build.gradle files
+* Use in in your sub-projects
+Once your have common script (any sub-projects build.gradle file), you can use it in your build.gradle files
 #+begin_src
   plugins {
     id 'devlibx.common'
