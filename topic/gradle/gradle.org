@@ -47,3 +47,10 @@ Once your have common script (any sub-projects build.gradle file), you can use i
 #+end_src  
 
 Not all the settings in buildSrc will be avaliable here
+
+* Useful items
+** Print the final commmand which is used to run this app
+Added gradle.properties files in your app (e.g. if you are running main class from app module, add this file in app module)
+#+begin_src
+  org.gradle.logging.level=info
+#+end_src

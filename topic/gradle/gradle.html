@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-12-31 Sun 14:02 -->
+<!-- 2023-12-31 Sun 21:17 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gradle Help</title>
@@ -23,35 +23,40 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2aea481">Setup common dependency using Gradle</a>
+<li><a href="#org29fe9ad">Setup common dependency using Gradle</a>
 <ul>
-<li><a href="#org2c7bdca">buildSrc</a>
+<li><a href="#org0ea45e2">buildSrc</a>
 <ul>
-<li><a href="#org6c6c87f">build.gradle</a></li>
-<li><a href="#orgb3d71c4">devlibx.common.gradle</a></li>
+<li><a href="#org2fdaef1">build.gradle</a></li>
+<li><a href="#org5b159c3">devlibx.common.gradle</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org1ab0654">Use in in your sub-projects</a></li>
+<li><a href="#org25aa478">Use in in your sub-projects</a></li>
+<li><a href="#orgfff327e">Useful items</a>
+<ul>
+<li><a href="#org1673b34">Print the final commmand which is used to run this app</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org2aea481" class="outline-2">
-<h2 id="org2aea481">Setup common dependency using Gradle</h2>
-<div class="outline-text-2" id="text-org2aea481">
+<div id="outline-container-org29fe9ad" class="outline-2">
+<h2 id="org29fe9ad">Setup common dependency using Gradle</h2>
+<div class="outline-text-2" id="text-org29fe9ad">
 </div>
-<div id="outline-container-org2c7bdca" class="outline-3">
-<h3 id="org2c7bdca">buildSrc</h3>
-<div class="outline-text-3" id="text-org2c7bdca">
+<div id="outline-container-org0ea45e2" class="outline-3">
+<h3 id="org0ea45e2">buildSrc</h3>
+<div class="outline-text-3" id="text-org0ea45e2">
 <p>
 This is to create common conventions. Create buildSrc folder in your root. Inside create following files with contents.
 </p>
 </div>
-<div id="outline-container-org6c6c87f" class="outline-4">
-<h4 id="org6c6c87f">build.gradle</h4>
-<div class="outline-text-4" id="text-org6c6c87f">
+<div id="outline-container-org2fdaef1" class="outline-4">
+<h4 id="org2fdaef1">build.gradle</h4>
+<div class="outline-text-4" id="text-org2fdaef1">
 <pre class="example">
 plugins {
     id 'groovy-gradle-plugin'
@@ -64,9 +69,9 @@ repositories {
 </div>
 </div>
 
-<div id="outline-container-orgb3d71c4" class="outline-4">
-<h4 id="orgb3d71c4">devlibx.common.gradle</h4>
-<div class="outline-text-4" id="text-orgb3d71c4">
+<div id="outline-container-org5b159c3" class="outline-4">
+<h4 id="org5b159c3">devlibx.common.gradle</h4>
+<div class="outline-text-4" id="text-org5b159c3">
 <p>
 Create a file src/main/groovy/devlibx.common.gradle
 </p>
@@ -91,9 +96,9 @@ dependencies {
 </div>
 </div>
 
-<div id="outline-container-org1ab0654" class="outline-2">
-<h2 id="org1ab0654">Use in in your sub-projects</h2>
-<div class="outline-text-2" id="text-org1ab0654">
+<div id="outline-container-org25aa478" class="outline-2">
+<h2 id="org25aa478">Use in in your sub-projects</h2>
+<div class="outline-text-2" id="text-org25aa478">
 <p>
 Once your have common script (any sub-projects build.gradle file), you can use it in your build.gradle files
 </p>
@@ -110,10 +115,27 @@ Not all the settings in buildSrc will be avaliable here
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgfff327e" class="outline-2">
+<h2 id="orgfff327e">Useful items</h2>
+<div class="outline-text-2" id="text-orgfff327e">
+</div>
+<div id="outline-container-org1673b34" class="outline-3">
+<h3 id="org1673b34">Print the final commmand which is used to run this app</h3>
+<div class="outline-text-3" id="text-org1673b34">
+<p>
+Added gradle.properties files in your app (e.g. if you are running main class from app module, add this file in app module)
+</p>
+<pre class="example">
+org.gradle.logging.level=info
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Harish Bohara</p>
-<p class="date">Created: 2023-12-31 Sun 14:02</p>
+<p class="date">Created: 2023-12-31 Sun 21:17</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
